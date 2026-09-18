@@ -1,0 +1,4 @@
+<input-method xmlns:android="http://schemas.android.com/apk/res/android" android:settingsActivity="co.haveanidea.typer.SettingsActivity" android:supportsSwitchingToNextInputMethod="true">
+    <subtype android:label="@string/english" android:imeSubtypeLocale="en_GB" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:label="@string/malayalam" android:imeSubtypeLocale="ml_IN" android:imeSubtypeMode="keyboard" />
+</input-method>
