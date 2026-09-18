@@ -2,7 +2,7 @@
 
 An Android keyboard with familiar everyday typing tools and a **Rambler-style voice-draft workflow**. Independent implementation; not affiliated with Google or Gboard.
 
-**Status: initial development prototype, not a finished Gboard replacement.** The source is implemented, but an Android build and real-device QA have not been completed in the authoring workspace. No APK is included yet. See [Typer report](docs/Typer.md) for the precise feature coverage and outstanding work.
+**Status: initial development prototype, not a finished Gboard replacement.** The Android build, Java unit tests, Android lint and Python gateway tests pass in GitHub Actions. A debug APK is available from the successful build below. Real-device QA remains outstanding. See [Typer report](docs/Typer.md) for the precise feature coverage and outstanding work.
 
 ## Included
 
@@ -29,7 +29,7 @@ Set `ANDROID_HOME` to your SDK location or create an untracked `local.properties
 
 This archive does not contain a Gradle wrapper binary. With Gradle installed you can generate the standard wrapper with `gradle wrapper --gradle-version 8.9` and commit its generated files. The included GitHub Actions workflow installs the pinned Gradle version directly.
 
-After pushing, **Actions → Android build → Typer-debug-apk** contains the debug APK when the build succeeds. The workflow has not yet run. Release signing keys are deliberately not included.
+After pushing, **Actions → Android build → Typer-debug-apk** contains the debug APK when the build succeeds. [Verified successful build and APK](https://github.com/sidhrthmnn/typer/actions/runs/35347285716) (code commit `8df2c85`). Release signing keys are deliberately not included.
 
 On the phone: install the APK → open Typer → Enable Typer → Choose Typer. Enable microphone permission only if you want dictation.
 
@@ -75,7 +75,7 @@ python3 -m unittest discover -s server -p 'test_*.py' -v
 gradle testDebugUnitTest
 ```
 
-Backend tests passed locally. Java unit tests are included for corrections, names, case preservation, suggestions, swipe ranking and cleanup; they still need to run through Gradle. Device QA checklist: [TESTING.md](TESTING.md).
+Backend tests passed locally. All eight Java unit tests for corrections, names, case preservation, suggestions, swipe ranking and cleanup passed in GitHub Actions, together with Android lint and APK assembly. Device QA checklist: [TESTING.md](TESTING.md).
 
 ## Architecture
 
