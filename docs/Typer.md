@@ -41,14 +41,14 @@ Editor changes invalidate asynchronous results. Closing the keyboard destroys th
 
 - All seven Java files passed syntax parsing; all five Android XML files are well-formed. This does not replace compilation.
 - 10 Python unit/integration tests passed, including real local HTTP calls with a mocked provider.
-- Android unit tests supplied but not executed: no JDK/Android SDK/Gradle installation available.
-- APK build, emulator launch, UI screenshots, latency profiling, accessibility and real microphone tests remain unverified.
-- GitHub Actions configuration supplied for lint, unit tests and debug APK build; the project is published to the repository’s main branch.
+- All eight Android Java unit tests passed in GitHub Actions.
+- Android compilation, debug APK assembly and lint passed. Emulator launch, UI screenshots, latency profiling, accessibility and real microphone tests remain unverified.
+- Published on `main`; [successful build and debug APK](https://github.com/sidhrthmnn/typer/actions/runs/35347285716), code commit `8df2c85`.
 - Gemini connectivity was not tested: no provider key or deployed gateway supplied.
 
 ## Path to a release
 
-1. Run the Android build workflow; resolve compiler/lint findings and install its APK on a test phone.
+1. Install the debug APK from the successful Android build on a test phone.
 2. Complete TESTING.md, especially editor changes, Unicode deletion, password modes and speech lifecycle.
 3. Replace the small English seed model with a properly licensed lexicon and contextual decoder. Benchmark suggestions and autocorrection with held-out text.
 4. Upgrade swipe decoding to a geometric path model, with confidence thresholds and candidate correction.
