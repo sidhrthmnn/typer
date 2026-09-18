@@ -18,7 +18,7 @@ public class SettingsActivity extends Activity {
     private android.content.SharedPreferences prefs;
     @Override public void onCreate(Bundle state) {
         super.onCreate(state); prefs=Prefs.get(this);
-        ScrollView scroll=new ScrollView(this); page=new LinearLayout(this); page.setOrientation(1); page.setPadding(28,32,28,40);
+        ScrollView scroll=new ScrollView(this); page=new LinearLayout(this); page.setOrientation(LinearLayout.VERTICAL); page.setPadding(28,32,28,40);
         page.setBackgroundColor(Color.rgb(245,246,239)); scroll.addView(page); setContentView(scroll);
         page.setOnApplyWindowInsetsListener((v,insets)-> { v.setPadding(28,insets.getSystemWindowInsetTop()+20,28,insets.getSystemWindowInsetBottom()+30); return insets; });
         title("Typer",32); title("A little more thought. A lot less typing.",16);
