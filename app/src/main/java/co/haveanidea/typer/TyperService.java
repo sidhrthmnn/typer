@@ -42,7 +42,7 @@ public class TyperService extends InputMethodService {
         try(BufferedReader r=new BufferedReader(new InputStreamReader(getAssets().open("words.txt")))) {String s;while((s=r.readLine())!=null)if(!s.trim().isEmpty())words.add(s.trim());}catch(IOException ignored){}
         baseWords.addAll(words);engine=new TypingEngine(baseWords);
     }
-    @Override public View onCreateInputView() { root=new LinearLayout(this);root.setOrientation(1);render();return root; }
+    @Override public View onCreateInputView() { root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);render();return root; }
     @Override public boolean onEvaluateFullscreenMode(){return false;}
     @Override public void onStartInput(EditorInfo info,boolean restarting) {
         super.onStartInput(info,restarting);resetVoice();composing.setLength(0);undoCommitted="";undoOriginal="";lastSpace=0;caps=false;
@@ -74,7 +74,7 @@ public class TyperService extends InputMethodService {
     private int dp(float n){return (int)(n*getResources().getDisplayMetrics().density+.5f);}
     private boolean dark(){int choice=prefs.getInt("theme",0);return choice==2||(choice==0&&(getResources().getConfiguration().uiMode&Configuration.UI_MODE_NIGHT_MASK)==Configuration.UI_MODE_NIGHT_YES);}
     private GradientDrawable shape(int color){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(9));return d;}
-    private LinearLayout row(){LinearLayout r=new LinearLayout(this);r.setOrientation(0);r.setGravity(Gravity.CENTER);return r;}
+    private LinearLayout row(){LinearLayout r=new LinearLayout(this);r.setOrientation(LinearLayout.HORIZONTAL);r.setGravity(Gravity.CENTER);return r;}
     private TextView label(String text,int size){TextView t=new TextView(this);t.setText(text);t.setTextSize(size);t.setTextColor(fg);t.setPadding(dp(10),dp(6),dp(10),dp(6));return t;}
     private Button button(String text,Runnable action){
         Button b=new Button(this);b.setAllCaps(false);b.setText(text);b.setTextSize(15);b.setTextColor(fg);b.setMinWidth(0);b.setMinimumWidth(0);b.setMinHeight(0);b.setMinimumHeight(0);b.setPadding(0,0,0,0);b.setBackground(shape(keyBg));
@@ -92,7 +92,7 @@ public class TyperService extends InputMethodService {
         else tool(toolbar,"Private",()->toast("Learning, clipboard and voice are disabled."));
         tool(toolbar,"Edit",()->{finishWord(false,"");page="edit";render();});
         tool(toolbar,"⚙",()->startActivity(new Intent(this,SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));
-        LinearLayout outer=row();root.addView(outer);body=new LinearLayout(this);body.setOrientation(1);
+        LinearLayout outer=row();root.addView(outer);body=new LinearLayout(this);body.setOrientation(LinearLayout.VERTICAL);
         int hand=prefs.getInt("hand",0);if(hand==2)outer.addView(new View(this),new LinearLayout.LayoutParams(0,1,.2f));
         outer.addView(body,new LinearLayout.LayoutParams(0,-2,hand==0?1:.8f));if(hand==1)outer.addView(new View(this),new LinearLayout.LayoutParams(0,1,.2f));
         if(page.equals("voice")){voicePanel();return;}if(page.equals("clips")){clipsPanel();return;}if(page.equals("emoji")){emojiPanel();return;}if(page.equals("edit")){editPanel();return;}
@@ -174,7 +174,7 @@ public class TyperService extends InputMethodService {
         final String clip=current;JSONArray saved;try{saved=new JSONArray(prefs.getString("clips","[]"));}catch(Exception ex){saved=new JSONArray();}final JSONArray clips=saved;
         if(!clip.isEmpty()){tool(body,clip.length()>65?clip.substring(0,65)+"…":clip,()->{if(getCurrentInputConnection()!=null)getCurrentInputConnection().commitText(clip,1);});tool(body,"Save current clip",()->{if(clip.length()>4000){toast("Clip is too long to save.");return;}JSONArray next=new JSONArray();next.put(clip);for(int i=0;i<Math.min(clips.length(),9);i++)if(!clips.optString(i).equals(clip))next.put(clips.optString(i));prefs.edit().putString("clips",next.toString()).apply();render();});}
         else body.addView(label("Nothing to paste. Copy some text first.",14));
-        ScrollView scroll=new ScrollView(this);LinearLayout list=new LinearLayout(this);list.setOrientation(1);scroll.addView(list);body.addView(scroll,new LinearLayout.LayoutParams(-1,dp(100)));
+        ScrollView scroll=new ScrollView(this);LinearLayout list=new LinearLayout(this);list.setOrientation(LinearLayout.VERTICAL);scroll.addView(list);body.addView(scroll,new LinearLayout.LayoutParams(-1,dp(100)));
         for(int i=0;i<clips.length();i++){String s=clips.optString(i);Button b=button(s.length()>65?s.substring(0,65)+"…":s,()->{if(getCurrentInputConnection()!=null)getCurrentInputConnection().commitText(s,1);});list.addView(b);}
         tool(body,"Clear saved clips",()->{prefs.edit().remove("clips").apply();render();});tool(body,"Back to keys",this::backToKeys);
     }
